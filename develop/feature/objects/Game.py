@@ -16,8 +16,8 @@ class Game:
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
         self.running = True
-        self.twin1 = Player(100, 10, [self.width//2, self.height//2])
-        self.twin2 = Player(100, 10, [self.width//4, self.height//4])
+        self.twin1 = Player(100, [self.width//2, self.height//2], 70)
+        self.twin2 = Player(150, [self.width//4, self.height//4], 50)
         #self.bullets = []
         self.font = pygame.font.SysFont("comicsans", 50)
         self.score = 0
