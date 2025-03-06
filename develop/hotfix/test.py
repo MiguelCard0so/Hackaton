@@ -165,6 +165,7 @@ while running:
 
         # Handle collision
         handle_collision(player1.pos, player2.pos)
+        handle_collision(player2.pos, player1.pos)
 
     # Draw the current screen based on the game state
     if current_state == MENU:
