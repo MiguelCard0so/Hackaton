@@ -33,17 +33,8 @@ class Game:
                     self.running = False
 
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                self.twin1.move("left")
-            if keys[pygame.K_RIGHT]:
-                self.twin1.move("right")
-            if keys[pygame.K_UP]:
-                self.twin1.move("up")
-            if keys[pygame.K_DOWN]:
-                self.twin1.move("down")
-            if keys[pygame.K_SPACE]:
-                #self.bullets.append(Bullet(self.player.pos.copy()))
-                pass
+            self.twin1.move(keys)
+            self.twin2.move(keys)
         return None
     
 
