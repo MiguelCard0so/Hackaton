@@ -11,7 +11,7 @@ player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
 player_pos = pygame.Vector2(20, 700)
 
 # Load the sprite image
-player_image = pygame.image.load("C:/Users/migue/Documentos/GitHub/hackaton/Hackaton").convert_alpha()
+player_image = pygame.image.load("D:/Downloads/Universidade/Cenas de fora/hackathon/Hackaton/sprites/char.png").convert_alpha()
 
 while running:
     # poll for events
@@ -21,7 +21,7 @@ while running:
             running = False
 
     # fill the screen with a color to wipe away anything from last frame
-    screen.fill("purple")
+    screen.fill("black")
 
     # Draw the sprite image
     screen.blit(player_image, player_pos)

@@ -22,6 +22,8 @@ class Game:
         self.font = pygame.font.SysFont("comicsans", 50)
         self.score = 0
 
+    
+
     def run(self):
         while self.running:
             self.clock.tick(30)
@@ -32,13 +34,13 @@ class Game:
 
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
-                self.player.move("left")
+                self.twin1.move("left")
             if keys[pygame.K_RIGHT]:
-                self.player.move("right")
+                self.twin1.move("right")
             if keys[pygame.K_UP]:
-                self.player.move("up")
+                self.twin1.move("up")
             if keys[pygame.K_DOWN]:
-                self.player.move("down")
+                self.twin1.move("down")
             if keys[pygame.K_SPACE]:
                 #self.bullets.append(Bullet(self.player.pos.copy()))
                 pass
