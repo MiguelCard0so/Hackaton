@@ -39,8 +39,8 @@ class Menu:
     # Function to draw the menu
     def draw_menu(self):
         self.screen.fill(self.WHITE)
-        title = font.render("Block Collision Game", True, BLACK)
-        self.screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 100))
+        title = self.font.render("Block Collision Game", True, self.BLACK)
+        self.screen.blit(title, (self.WIDTH // 2 - title.get_width() // 2, 100))
 
         for i, option in enumerate(self.menu_options):
             color = self.BLACK if i == self.selected_option else self.GRAY

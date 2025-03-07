@@ -173,7 +173,10 @@ while running:
         # Handle collision
         handle_collision(player1.pos, block)
         handle_collision(player2.pos, block)
-
+        
+        if event.key == pygame.K_ESCAPE:
+            current_state = MENU
+    
     # Draw the current screen based on the game state
     if current_state == MENU:
         draw_menu()
