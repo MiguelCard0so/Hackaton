@@ -9,7 +9,8 @@ pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Block Collision Game")
-#background = pygame.image.load("C:\Users\migue\Documentos\GitHub\hackaton\Hackaton\release\resources\Background.png")
+background = pygame.image.load("C:/Users/migue/Documentos/GitHub/hackaton/Hackaton/develop/release/resources/image.png")
+backOpt = pygame.image.load("C:/Users/migue/Documentos/GitHub/hackaton/Hackaton/develop/release/resources/transferir.png")
 
 # Colors
 WHITE = (255, 255, 255)
@@ -30,6 +31,8 @@ current_state = MENU
 # Menu options
 menu_options = ["Start Game", "Options", "Exit"]
 selected_option = 0
+
+is_fullscreen = False
 
 # Player classes
 class Player:
@@ -106,16 +109,53 @@ def handle_collision(rect1, rect2):
         else:
             rect1.top = rect2.bottom
 
+# Modified text rendering with outline effect
+def draw_text_with_outline(surface, text, font, main_color, outline_color, x, y):
+    # Render outline in 8 directions
+    offsets = [(-1, -1), (-1, 0), (-1, 1),
+               (0, -1),          (0, 1),
+               (1, -1),  (1, 0), (1, 1)]
+    
+    # Create outline text
+    outline_surface = font.render(text, True, outline_color)
+    for dx, dy in offsets:
+        surface.blit(outline_surface, (x + dx, y + dy))
+    
+    # Create main text
+    main_surface = font.render(text, True, main_color)
+    surface.blit(main_surface, (x, y))
+
 # Function to draw the menu
 def draw_menu():
     screen.fill(WHITE)
-    title = font.render("Block Collision Game", True, BLACK)
+    screen.blit(background, (0,0))
+    title = font.render("SincTwo", True, BLACK)
     screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 100))
 
     for i, option in enumerate(menu_options):
-        color = BLACK if i == selected_option else GRAY
-        text = small_font.render(option, True, color)
-        screen.blit(text, (WIDTH // 2 - text.get_width() // 2, 250 + i * 70))
+        # Calculate text position
+        x = WIDTH // 2
+        y = 250 + i * 70
+        text = small_font.render(option, True, BLACK if i == selected_opt_option else GRAY)
+        text_rect = text.get_rect(center=(x, y))
+        text_width = small_font.size(option)[0]
+        
+        # Set colors
+        main_color = BLACK if i == selected_option else GRAY
+        outline_color = (128, 0, 128)  # Purple
+        if i == selected_option:
+            outline_color = (0, 255, 0)  # Green when selected
+        
+        # Draw text with outline
+        draw_text_with_outline(
+            screen, 
+            option, 
+            small_font, 
+            main_color, 
+            outline_color, 
+            x - text_width // 2, 
+            y
+        )
 
 # Function to draw the game
 def draw_game():
@@ -124,14 +164,62 @@ def draw_game():
     pygame.draw.rect(screen, player2.color, player2.pos)
     pygame.draw.rect(screen, block_color, block)
 
-# Function to draw the options screen
+# Modified options menu
+options_menu = ["Toggle Fullscreen", "Back"]
+selected_opt_option = 0  # Track selected option in options menu    
+
+def toggle_fullscreen():
+    global is_fullscreen, screen, WIDTH, HEIGHT, background, backOpt
+    is_fullscreen = not is_fullscreen
+    
+    if is_fullscreen:
+        # Get desktop resolution
+        info = pygame.display.Info()
+        new_width = info.current_w
+        new_height = info.current_h
+        flags = pygame.FULLSCREEN
+    else:
+        new_width = 800
+        new_height = 600
+        flags = 0
+    
+    # Recreate screen
+    screen = pygame.display.set_mode((new_width, new_height), flags)
+    WIDTH, HEIGHT = new_width, new_height
+    
+    # Rescale backgrounds
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    backOpt = pygame.transform.scale(backOpt, (WIDTH, HEIGHT))
+
+# Modified options screen drawing
 def draw_options():
     screen.fill(WHITE)
+    screen.blit(backOpt, (0,0))
     title = font.render("Options", True, BLACK)
     screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 100))
-    text = small_font.render("This is the options screen.", True, BLACK)
-    screen.blit(text, (WIDTH // 2 - text.get_width() // 2, 300))
-    #screen.blit(background, (0,0))
+
+    for i, option in enumerate(options_menu):
+        # Calculate text position
+        x = WIDTH // 2
+        y = 250 + i * 70
+        text_width = small_font.size(option)[0]
+        
+        # Set colors
+        main_color = BLACK if i == selected_opt_option else GRAY
+        outline_color = (128, 0, 128)  # Purple
+        if i == selected_opt_option:
+            outline_color = (0, 255, 0)  # Green when selected
+        
+        # Draw text with outline
+        draw_text_with_outline(
+            screen, 
+            option, 
+            small_font, 
+            main_color, 
+            outline_color, 
+            x - text_width // 2, 
+            y
+        )
 
 # Main game loop
 clock = pygame.time.Clock()
@@ -163,20 +251,29 @@ while running:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:  # Go back to menu
                     current_state = MENU
+                elif event.key == pygame.K_DOWN:
+                    selected_opt_option = (selected_opt_option + 1) % len(options_menu)
+                elif event.key == pygame.K_UP:
+                    selected_opt_option = (selected_opt_option - 1) % len(options_menu)
+                elif event.key == pygame.K_RETURN:
+                    if selected_opt_option == 0:  # Toggle Fullscreen
+                        toggle_fullscreen()
+                    elif selected_opt_option == 1:  # Back
+                        current_state = MENU
 
-    # Handle game controls
-    if current_state == GAME:
-        keys = pygame.key.get_pressed()
-        player1.move(keys, dt, controls_player1)  # Twin1 uses WASD
-        player2.move(keys, dt, controls_player2)  # Twin2 uses Arrow Keys
+        # Handle game controls
+        if current_state == GAME:
+            keys = pygame.key.get_pressed()
+            player1.move(keys, dt, controls_player1)  # Twin1 uses WASD
+            player2.move(keys, dt, controls_player2)  # Twin2 uses Arrow Keys
 
-        # Handle collision
-        handle_collision(player1.pos, block)
-        handle_collision(player2.pos, block)
-        
-        if event.key == pygame.K_ESCAPE:
-            current_state = MENU
-    
+            # Handle collision
+            handle_collision(player1.pos, block)
+            handle_collision(player2.pos, block)
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    current_state = MENU
+
     # Draw the current screen based on the game state
     if current_state == MENU:
         draw_menu()
