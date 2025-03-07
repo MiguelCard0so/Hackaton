@@ -1,0 +1,30 @@
+Sejam muito bem vindos a Sintra! 
+Estava mesmo à vossa espera! 
+O Nome_Do_NPC2-Reimundo está à vossa espera para poderem ir investigar o Palácio da Pena!
+Eu ajudo-vos a chegar até ele, sigam-me!
+(Player 1 usa o WASD para se mover)
+(Player 2 usa as setas para se mover)
+
+Começa a contar parte da história de Sintra
+Como sabem, Sintra é uma vila que está cheia de mistérios, 
+muitos pensam que havia passagens secretas nos castelos e a 
+Quinta da Regaleira tem um sistema de tuneis bastante complexo, 
+muitas pessoas perderam-se por lá
+
+Chegam ao fim da parte residencial e entram na Floresta
+Vamos por aqui que é um atalho...
+Mas espera, esta porta não estava aqui antes
+Parece que está fechada à chave, acham que me podem ajudar?
+(usa as teclas __ e __ para revelar coisas escondidas)
+
+Verde, como é que aí foste parar?
+Estás aí como, Roxo?
+
+Uau nem me apercebi dessas passagens!
+
+Bem, chegámos, espero que a vossa investigação corra muito bem, 
+deixo-vos agora com o Nome_Do_NPC2-Reimundo, estão em muito boas mãos!
+
+
+
+1920x960
