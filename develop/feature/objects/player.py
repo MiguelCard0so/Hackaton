@@ -4,7 +4,9 @@ import numpy as np
 class Player:
     def __init__(self, speed, pos, range):
         self.killed = False
+        self.inventory = []
         self.speed = speed #300
+        self.inventory = None
         self.pos = pos
         self.color = None
         self.range = range
@@ -38,9 +40,11 @@ class Player:
 class Twin1(Player):
     def __init__(self, speed, pos, range):
         super().__init__(speed, pos, range)
+        super.inventory = []
         self.color = (0, 255, 0)
     
 class Twin2(Player):
     def __init__(self, speed, pos, range):
         super().__init__(speed, pos, range)
+        super.inventory = []
         self.color = (128, 0, 128)
