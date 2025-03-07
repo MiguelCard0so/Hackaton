@@ -7,6 +7,8 @@ running = True
 dt = 0
 speedmod = 0
 
+background = pygame.image.load("release/resources/Background.png")
+
 # Define tile size
 TILE_SIZE = 64
 
@@ -34,6 +36,7 @@ while running:
     # Draw the sprite image at the player's tile position
     screen.blit(player_image, (player_pos.x * TILE_SIZE, player_pos.y * TILE_SIZE))
     screen.blit(player2_image, (player2_pos.x * TILE_SIZE, player2_pos.y * TILE_SIZE))
+    screen.blit(background, (0,0))
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:

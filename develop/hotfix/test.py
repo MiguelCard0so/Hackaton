@@ -8,11 +8,13 @@ pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Block Collision Game")
+#background = pygame.image.load("C:\Users\migue\Documentos\GitHub\hackaton\Hackaton\release\resources\Background.png")
 
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
+BLUE = (0, 0, 255)
 
 # Fonts
 font = pygame.font.Font(None, 74)
@@ -73,6 +75,8 @@ class Twin2(Player):
 # Create players
 player1 = Twin1(speed=300, pos=pygame.Rect(100, 100, 50, 50), range=100)
 player2 = Twin2(speed=300, pos=pygame.Rect(400, 300, 50, 50), range=100)
+block = pygame.Rect(300, 200, 200, 200)
+block_color = (255, 0, 0)  # Red
 
 # Control schemes
 controls_player1 = {
@@ -117,6 +121,7 @@ def draw_game():
     screen.fill(WHITE)
     pygame.draw.rect(screen, player1.color, player1.pos)
     pygame.draw.rect(screen, player2.color, player2.pos)
+    pygame.draw.rect(screen, block_color, block)
 
 # Function to draw the options screen
 def draw_options():
@@ -125,6 +130,7 @@ def draw_options():
     screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 100))
     text = small_font.render("This is the options screen.", True, BLACK)
     screen.blit(text, (WIDTH // 2 - text.get_width() // 2, 300))
+    #screen.blit(background, (0,0))
 
 # Main game loop
 clock = pygame.time.Clock()
@@ -164,8 +170,8 @@ while running:
         player2.move(keys, dt, controls_player2)  # Twin2 uses Arrow Keys
 
         # Handle collision
-        handle_collision(player1.pos, player2.pos)
-        handle_collision(player2.pos, player1.pos)
+        handle_collision(player1.pos, block)
+        handle_collision(player2.pos, block)
 
     # Draw the current screen based on the game state
     if current_state == MENU:
